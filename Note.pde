@@ -55,13 +55,13 @@ class Note {
         (type.equals("down") && keyCode == DOWN)) {
         
         // Check y position for feedback
-        if (y > 770+96 && y < 786+96 ) {
+        if (y > arrowHeight - 8 && y < arrowHeight + 8 ) {
             println("Perfect!");
             return true; // successfully hit the note
-        } else if (y > 740+96 && y < 818+96) {
+        } else if (y > arrowHeight - 48 && y < arrowHeight + 48) {
             println("Great!");
             return true; // still a hit but less accurate
-        } else if (y > 700+96 && y < 856+96) {
+        } else if (y > arrowHeight - 78 && y < arrowHeight + 78) {
             println("Okay!");
             return true; // barely hit the note
         } else {
@@ -73,6 +73,6 @@ class Note {
   }
   
   boolean isOffScreen() {
-    return isActive && y > height; // Check if the note is past the bottom of the screen
+    return isActive && y > height; // check if note is past the screen
   }
 }
