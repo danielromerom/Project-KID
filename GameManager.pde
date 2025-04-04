@@ -11,6 +11,7 @@ float songStartTime;
 PImage background;
 PImage leftArrow, rightArrow, upArrow, downArrow;
 PImage menuBackground;
+PImage trackBackground;
 
 import processing.sound.*; // Add sound library import
 
@@ -18,6 +19,8 @@ AudioManager easySong;
 float songDuration;
 
 boolean menu = true;
+boolean trackMenu = false;
+boolean easyLevel = false;
 
 void setup() {
   
@@ -32,6 +35,7 @@ void setup() {
   downArrow = loadImage("images/arrows/arrowdb.png");
   
   menuBackground = loadImage("images/backgrounds/mainscreen.png");
+  trackBackground = loadImage("images/backgrounds/trackselect.png");
   
   easySong = new AudioManager(this, "sound/easysong.mp3");
   songDuration = easySong.getDuration();
@@ -54,7 +58,10 @@ void draw() {
     if (menu){
       background(menuBackground);
     }
-    else{
+    else if(trackMenu){
+      background(trackBackground);
+    }
+    else if(easyLevel){
       background(background);
       float currentSongTime = (millis() - songStartTime) / 1000.0;
   
@@ -106,6 +113,12 @@ void draw() {
 void keyPressed() {
     if (menu && key == ' ') {
       menu = false;
+      trackMenu = true;
+      return;
+    }
+    else if(trackMenu && keyCode == UP){
+      trackMenu = false;
+      easyLevel = true;
       songStartTime = millis();
       easySong.play(); // start song only when game starts
       return;
