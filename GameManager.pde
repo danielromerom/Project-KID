@@ -13,7 +13,8 @@ PImage leftArrow, rightArrow, upArrow, downArrow;
 
 import processing.sound.*; // Add sound library import
 
-SoundFile easySong;
+AudioManager easySong;
+float songDuration;
 
 void setup() {
   imageMode(CENTER);
@@ -27,7 +28,8 @@ void setup() {
   downArrow = loadImage("images/arrows/arrowdb.png");
   
   
-  easySong = new SoundFile(this, "sound/easysong.mp3");
+  easySong = new AudioManager(this, "sound/easysong.mp3");
+  songDuration = easySong.getDuration();
   easySong.play();
 
   // add notes to an array of notes (level design)
