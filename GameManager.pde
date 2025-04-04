@@ -11,6 +11,10 @@ float songStartTime;
 PImage background;
 PImage leftArrow, rightArrow, upArrow, downArrow;
 
+import processing.sound.*; // Add sound library import
+
+SoundFile easySong;
+
 void setup() {
   imageMode(CENTER);
   size(1920, 1080);
@@ -21,6 +25,10 @@ void setup() {
   rightArrow = loadImage("images/arrows/arrowrb.png");
   upArrow = loadImage("images/arrows/arrowub.png");
   downArrow = loadImage("images/arrows/arrowdb.png");
+  
+  
+  easySong = new SoundFile(this, "sound/easysong.mp3");
+  easySong.play();
 
   // add notes to an array of notes (level design)
   notes = new ArrayList<Note>();
@@ -43,6 +51,7 @@ void draw() {
     image(rightArrow, rightArrowLoc, arrowHeight);
     image(downArrow, downArrowLoc, arrowHeight);
     image(upArrow, upArrowLoc, arrowHeight);
+    
     
     // check if keys are being pressed and highlight button
     if (keyCode == LEFT && keyPressed) {
