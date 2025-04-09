@@ -1,8 +1,8 @@
 // main file that runs the game
 int leftArrowLoc = 481+96;
-int rightArrowLoc = 736+96;
-int downArrowLoc = 992+96;
-int upArrowLoc = 1248+96;
+int rightArrowLoc = 1248+96;
+int downArrowLoc = 736+96;
+int upArrowLoc = 992+96;
 int arrowHeight = 778+96;
 
 ArrayList<Note> notes;
@@ -186,8 +186,8 @@ void keyPressed() {
               songStartTime = millis();
               easySong.play(); // Start song
               notes = new ArrayList<Note>();
-              pattern = new Pattern();
-              notes = pattern.easyLevel();
+            pattern = new Pattern();
+            notes = pattern.easyLevel();
 
           } else if (currentTrackOption == 1) {
               // Add logic for option 1

@@ -4,9 +4,9 @@ class Pattern{
   
   ArrayList<Note> pattern_notes;
     int leftArrowLoc = 481+96;
-    int rightArrowLoc = 736+96;
-    int downArrowLoc = 992+96;
-    int upArrowLoc = 1248+96;
+    int rightArrowLoc = 1248+96;
+    int downArrowLoc = 736+96;
+    int upArrowLoc = 992+96;
     int arrowHeight = 778+96;
   
   Pattern(){
@@ -18,7 +18,7 @@ class Pattern{
     pattern_notes.add(new Note(leftArrowLoc, 0, 5.8, "left", 1.1)); 
     pattern_notes.add(new Note(rightArrowLoc, 0, 5.8, "right", 1.1)); 
     
-    pattern_notes.add(new Note(rightArrowLoc, 0, 8, "right", 2.2)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 8, "right", 2.3)); 
     pattern_notes.add(new Note(downArrowLoc, 0, 13, "down", 5.0));  
     
     pattern_notes.add(new Note(leftArrowLoc, 0, 8, "left", 6.0)); 
@@ -33,9 +33,9 @@ class Pattern{
     pattern_notes.add(new Note(rightArrowLoc, 0, 10, "right", 10.7));
     
     pattern_notes.add(new Note(leftArrowLoc, 0, 11, "left", 12)); 
-    pattern_notes.add(new Note(rightArrowLoc, 0, 11, "right", 12.2));
-    pattern_notes.add(new Note(downArrowLoc, 0, 11, "down", 12.6)); 
-    pattern_notes.add(new Note(upArrowLoc, 0, 11, "up", 12.8));
+    pattern_notes.add(new Note(downArrowLoc, 0, 11, "down", 12.2));
+    pattern_notes.add(new Note(upArrowLoc, 0, 11, "up", 12.6)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 11, "right", 12.8));
     
     
     return pattern_notes;
