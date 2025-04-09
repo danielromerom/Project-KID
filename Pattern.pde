@@ -33,7 +33,7 @@ class Pattern{
     pattern_notes.add(new Note(upArrowLoc, 0, 11, "up", 8.0)); 
     pattern_notes.add(new Note(upArrowLoc, 0, 11, "up", 8.4));
     
-    pattern_notes.add(new Note(downArrowLoc, 0, 10, "down", 9.5)); 
+    //pattern_notes.add(new Note(downArrowLoc, 0, 10, "down", 9.5)); 
     
     pattern_notes.add(new Note(leftArrowLoc, 0, 10.5, "left", 10.1)); 
     pattern_notes.add(new Note(rightArrowLoc, 0, 10.5, "right", 10.8));
