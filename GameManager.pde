@@ -7,6 +7,7 @@ int arrowHeight = 778+96;
 
 ArrayList<Note> notes;
 float songStartTime;
+Pattern pattern;
 
 int currentTrackOption = 0;
 PImage background;
@@ -40,15 +41,6 @@ void setup() {
   
   easySong = new AudioManager(this, "sound/easysong.mp3");
   songDuration = easySong.getDuration();
-
-  // add notes to an array of notes (level design)
-  notes = new ArrayList<Note>();
-  
-  notes.add(new Note(leftArrowLoc, 0, 5, "left", 1.0)); 
-  notes.add(new Note(rightArrowLoc, 0, 5, "right", 1.0)); 
-
-  notes.add(new Note(rightArrowLoc, 0, 10, "right", 3.0)); 
-  notes.add(new Note(downArrowLoc, 0, 15, "down", 6.0));  
 
   songStartTime = millis();
   fullScreen();
@@ -193,6 +185,10 @@ void keyPressed() {
               easyLevel = true;
               songStartTime = millis();
               easySong.play(); // Start song
+              notes = new ArrayList<Note>();
+              pattern = new Pattern();
+              notes = pattern.easyLevel();
+
           } else if (currentTrackOption == 1) {
               // Add logic for option 1
           } else if (currentTrackOption == 2) {
