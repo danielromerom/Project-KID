@@ -14,8 +14,6 @@ class Pattern{
   
   ArrayList<Note> easyLevel(){
     pattern_notes = new ArrayList<Note>();
-    
-    pattern_notes.add(new Note(rightArrowLoc, 0, 11, "right", 1.0, true, 8.0));
   
     pattern_notes.add(new Note(leftArrowLoc, 0, 6.3, "left", 1)); 
     pattern_notes.add(new Note(rightArrowLoc, 0, 6.3, "right", 1)); 
@@ -45,8 +43,9 @@ class Pattern{
     pattern_notes.add(new Note(upArrowLoc, 0, 11, "up", 12.6)); 
     pattern_notes.add(new Note(rightArrowLoc, 0, 11, "right", 12.8));
     
-
-    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 13)); // Regular
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 13.3, 3.0)); // Hold
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 13.5, 2.0, 10)); // Spam
     
     return pattern_notes;
   }

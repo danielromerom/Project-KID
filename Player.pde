@@ -12,9 +12,10 @@ class Player{
 
   void displayScore() {
     
+    textAlign(RIGHT);
     textFont(libreFont);
     textSize(64);
     fill(#00ACE0);
-    text("Score: " + score, 4 * width / 5, height / 10);
+    text("Score: " + score, width - 64, height / 10);
   }
 }

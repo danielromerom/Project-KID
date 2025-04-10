@@ -1,0 +1,193 @@
+// class that holds the information for all the individual notes in a level
+PImage feedbackImage;
+String noteType;
+
+class Note {
+  float x, y; // position 
+  float speed; // speed at which the note moves
+  boolean isHit; // checks if the note has been hit
+  String type; // left right up or down
+  String noteType; // "regular", "hold", "spam"
+  PImage sprite; // sprite image for note
+  float spawnTime; // time in seconds when the note should appear
+  boolean isActive; // tracks if the note should be drawn
+  
+  // for Hold Notes
+  float holdDuration; // Duration for holding the note
+  ArrayList<PVector> segments;
+
+  // for Spam Notes
+  int spamGoal; // Number of presses required
+  int spamCounter; // Track number of presses during spam notes
+  float spamDuration; // Duration for spamming
+
+  // constructor for Regular notes
+  Note(float x, float y, float speed, String type, float spawnTime) {
+    this(x, y, speed, type, spawnTime, "regular", 0, 0, 0);
+  }
+
+  // constructor for Hold Notes
+  Note(float x, float y, float speed, String type, float spawnTime, float holdDuration) {
+    this(x, y, speed, type, spawnTime, "hold", holdDuration, 0, 0);
+    this.segments = new ArrayList<PVector>();
+  }
+
+  // constructor for Spam Notes
+  Note(float x, float y, float speed, String type, float spawnTime, float spamDuration, int spamGoal) {
+    this(x, y, speed, type, spawnTime, "spam", spamDuration, spamGoal, 0);
+  }
+
+  // general Constructor
+  private Note(float x, float y, float speed, String type, float spawnTime, String noteType, float duration, int spamGoal, int spamCounter) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.isHit = false;
+    this.type = type;
+    this.spawnTime = spawnTime;
+    this.noteType = noteType;
+    this.isActive = false;
+    this.holdDuration = duration;
+    this.spamDuration = duration;
+    this.spamGoal = spamGoal;
+    this.spamCounter = spamCounter;
+    this.segments = new ArrayList<PVector>();
+    loadSprite();
+    
+     if (noteType.equals("hold")) {
+        generateSegments(); // create hold note segments
+      }
+  }
+
+  // loads the sprite based on the type
+  void loadSprite() {
+    if (type.equals("left")) {
+      sprite = loadImage("images/arrows/arrowlh.png");
+    } else if (type.equals("right")) {
+      sprite = loadImage("images/arrows/arrowrh.png");
+    } else if (type.equals("up")) {
+      sprite = loadImage("images/arrows/arrowuh.png");
+    } else if (type.equals("down")) {
+      sprite = loadImage("images/arrows/arrowdh.png");
+    }
+  }
+  
+  void generateSegments() {
+    // for hold notes: create multiple segments
+    float totalDuration = holdDuration * 1000; // Duration in ms
+    int segmentCount = (int)(totalDuration / 100); // 100ms per segment
+    
+    // Start from original Y position and stack UPWARDS
+    for (int i = 0; i < segmentCount; i++) {
+      float segmentY = y - (i * sprite.height); 
+      segments.add(new PVector(x, segmentY));
+    }
+  }
+
+  void update(float currentSongTime) {
+    if (currentSongTime >= spawnTime) {
+      isActive = true; // activate note when its spawn time arrives
+    }
+    if (isActive) {
+      if (noteType.equals("regular") || noteType.equals("spam")) {
+        y += speed; // regular and spam notes move downward
+      } else if (noteType.equals("hold")) {
+        // move all segments for hold notes
+        for (PVector segment : segments) {
+          segment.y += speed;
+        }
+      }
+    }
+  }
+  
+  void display() {
+    if (!isActive || sprite == null) return;
+
+    if (noteType.equals("regular") || noteType.equals("spam")) {
+      // display regular or spam notes
+        image(sprite, x, y);
+    } else if (noteType.equals("hold")) {
+      // display all segments for hold notes
+      for (PVector segment : segments) {
+        image(sprite, segment.x, segment.y);
+      }
+    }
+  }
+  
+  boolean checkHit(int keyCode, FeedbackManager feedbackManager, Player player, float currentSongTime) {
+    // check if the key pressed matches the note type
+    if ((type.equals("left") && keyCode == LEFT) ||
+      (type.equals("right") && keyCode == RIGHT) ||
+      (type.equals("up") && keyCode == UP) ||
+      (type.equals("down") && keyCode == DOWN)) {
+        
+      if (noteType.equals("regular")) {
+        return handleRegularHit(feedbackManager, player); // regular hit logic
+      } else if (noteType.equals("hold")) {
+        return handleHoldHit(feedbackManager, player, currentSongTime); // hold hit logic
+      } else if (noteType.equals("spam")) {
+        return handleSpamHit(feedbackManager, player, currentSongTime); // spam hit logic
+      }
+    }
+    return false; // key pressed does not match this note's type
+  }
+  
+  boolean handleRegularHit(FeedbackManager feedbackManager, Player player) {
+    if (y > arrowHeight - 8 && y < arrowHeight + 8) {
+      feedbackManager.addFeedback(perfectFeedback, millis());
+      player.addPoints(100);
+      isHit = true;
+      return true;
+    } else if (y > arrowHeight - 48 && y < arrowHeight + 48) {
+      feedbackManager.addFeedback(goodFeedback, millis());
+      player.addPoints(75); 
+      isHit = true;
+      return true;
+    } else if (y > arrowHeight - 78 && y < arrowHeight + 78) {
+      feedbackManager.addFeedback(okFeedback, millis());
+      player.addPoints(50); 
+      isHit = true;
+      return true;
+    } else {
+      feedbackManager.addFeedback(missFeedback, millis());
+      isHit = true;
+      return true; // Missed
+    }
+  }
+  
+  boolean handleHoldHit(FeedbackManager feedbackManager, Player player, float currentSongTime) {
+    if (isActive && currentSongTime >= spawnTime) {
+      if (!segments.isEmpty()) {
+        segments.remove(0); // remove the first segment as it's "hit"
+        feedbackManager.addFeedback(perfectFeedback, millis());
+        player.addPoints(10); // add points for each segment hit
+        return true; // continue holding
+      } else {
+        isActive = false; // all segments hit, deactivate note
+        return true; // successfully completed hold note
+      }
+    }
+    feedbackManager.addFeedback(missFeedback, millis());
+    return false; // hold note missed
+  }
+  
+  boolean handleSpamHit(FeedbackManager feedbackManager, Player player, float currentSongTime) {
+    if (isActive && currentSongTime >= spawnTime && currentSongTime <= spawnTime + spamDuration) {
+      spamCounter++; // increment the spam counter
+      feedbackManager.addFeedback(okFeedback, millis());
+      if (spamCounter >= spamGoal) {
+        feedbackManager.addFeedback(perfectFeedback, millis());
+        player.addPoints(200); // award points for completing spam note
+        isHit = true;
+        return true; // spam note completed
+      }
+      return true; // continue spamming
+    }
+    feedbackManager.addFeedback(missFeedback, millis());
+    return false; // spam note missed
+  }  
+  
+  boolean isOffScreen() {
+    return isActive && y > height; // check if note is past the screen
+  }
+}
