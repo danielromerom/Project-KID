@@ -51,7 +51,7 @@ void setup() {
   menuBackground = loadImage("images/backgrounds/mainscreen.png");
   trackBackground = loadImage("images/backgrounds/menubg.png");
   
-  easySong = new AudioManager(this, "sound/easysong.mp3");
+  easySong = new AudioManager(this, "sound/easysongNEW.mp3");
   songDuration = easySong.getDuration();
 
   songStartTime = millis();
