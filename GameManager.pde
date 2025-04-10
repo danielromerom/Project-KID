@@ -8,12 +8,18 @@ int arrowHeight = 778+96;
 ArrayList<Note> notes;
 float songStartTime;
 Pattern pattern;
+FeedbackManager feedbackManager = new FeedbackManager();
+Player player = new Player();
+PFont libreFont;
 
 int currentTrackOption = 0;
 PImage background;
 PImage leftArrow, rightArrow, upArrow, downArrow;
 PImage menuBackground;
 PImage trackBackground;
+
+// feedback images
+PImage perfectFeedback, goodFeedback, okFeedback, missFeedback;
 
 import processing.sound.*; // Add sound library import
 
@@ -28,7 +34,8 @@ void setup() {
   
   imageMode(CENTER);
   size(1920, 1080);
-  
+
+  libreFont = createFont("LibreBaskerville-Regular.ttf", 64);
   // load assets
   background = loadImage("images/backgrounds/menubg.png");
   leftArrow = loadImage("images/arrows/arrowlb.png");
@@ -36,6 +43,11 @@ void setup() {
   upArrow = loadImage("images/arrows/arrowub.png");
   downArrow = loadImage("images/arrows/arrowdb.png");
   
+  perfectFeedback = loadImage("images/feedbacks/mikuperfect.png");
+  goodFeedback = loadImage("images/feedbacks/mikugood.png");
+  okFeedback = loadImage("images/feedbacks/mikuok.png");
+  missFeedback = loadImage("images/feedbacks/mikumiss.png");
+
   menuBackground = loadImage("images/backgrounds/mainscreen.png");
   trackBackground = loadImage("images/backgrounds/menubg.png");
   
@@ -118,13 +130,13 @@ void draw() {
     }
     else if(easyLevel){
       background(background);
+      player.displayScore();
       float currentSongTime = (millis() - songStartTime) / 1000.0;
   
       image(leftArrow, leftArrowLoc, arrowHeight);
       image(rightArrow, rightArrowLoc, arrowHeight);
       image(downArrow, downArrowLoc, arrowHeight);
       image(upArrow, upArrowLoc, arrowHeight);
-      
       
       // check if keys are being pressed and highlight button
       if (keyCode == LEFT && keyPressed) {
@@ -161,6 +173,7 @@ void draw() {
               notes.remove(i);
           }
        }
+       feedbackManager.displayFeedback();
     }
 }
 
@@ -200,7 +213,7 @@ void keyPressed() {
     } 
     else{
       for (Note n : notes) {
-        if (n.isActive && n.checkHit(keyCode)) {
+        if (n.isActive && n.checkHit(keyCode, feedbackManager, player)) {
             n.isHit = true;
             break;
         }

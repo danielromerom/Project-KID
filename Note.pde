@@ -1,4 +1,5 @@
 // class that holds the information for all the individual notes in a level
+PImage feedbackImage;
 
 class Note {
   float x, y; // position 
@@ -47,7 +48,7 @@ class Note {
     } 
   }
   
-  boolean checkHit(int keyCode) {
+  boolean checkHit(int keyCode, FeedbackManager feedbackManager, Player player) {
     // Check if the key pressed matches the note type
     if ((type.equals("left") && keyCode == LEFT) ||
         (type.equals("right") && keyCode == RIGHT) ||
@@ -56,17 +57,20 @@ class Note {
         
         // Check y position for feedback
         if (y > arrowHeight - 8 && y < arrowHeight + 8 ) {
-            println("Perfect!");
+            feedbackManager.addFeedback(perfectFeedback, millis());
+            player.addPoints(100);
             return true; // successfully hit the note
         } else if (y > arrowHeight - 48 && y < arrowHeight + 48) {
-            println("Great!");
+            feedbackManager.addFeedback(goodFeedback, millis());
+            player.addPoints(75);
             return true; // still a hit but less accurate
         } else if (y > arrowHeight - 78 && y < arrowHeight + 78) {
-            println("Okay!");
+            feedbackManager.addFeedback(okFeedback, millis());
+            player.addPoints(50);
             return true; // barely hit the note
         } else {
-            println("Missed!");
-            return false; // missed note
+            feedbackManager.addFeedback(missFeedback, millis());
+            return true; // missed note
         }
     }
     return false; // key pressed doesn't match the note type
