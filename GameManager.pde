@@ -14,14 +14,19 @@ PFont libreFont;
 
 int currentTrackOption = 0;
 PImage background;
+PImage pressSpace;
 PImage leftArrow, rightArrow, upArrow, downArrow;
 PImage leftArrowb, rightArrowb, upArrowb, downArrowb;
 PImage leftArrowbp, rightArrowbp, upArrowbp, downArrowbp;
 PImage menuBackground;
 PImage trackBackground;
+PImage easyTrackBackground;
+PImage mediumTrackBackground;
+PImage hardTrackBackground;
 
 // feedback images
 PImage perfectFeedback, goodFeedback, okFeedback, missFeedback;
+PImage gradeSS, gradeS, gradeA, gradeB, gradeC, gradeD, gradeF;
 
 import processing.sound.*; // Add sound library import
 
@@ -29,13 +34,17 @@ AudioManager easySong;
 AudioManager mediumSong;
 AudioManager hardSong;
 
-float songDuration;
+float easySongDuration;
+float mediumSongDuration;
+float hardSongDuration;
+int maxScore;
 
 boolean menu = true;
 boolean trackMenu = false;
 boolean easyLevel = false;
 boolean mediumLevel = false;
 boolean hardLevel = false;
+boolean resultsScreen = false;
 
 void setup() {
   
@@ -69,12 +78,26 @@ void setup() {
 
   menuBackground = loadImage("images/backgrounds/mainscreen.png");
   trackBackground = loadImage("images/backgrounds/menubg.png");
-  
+  easyTrackBackground = loadImage("images/backgrounds/easybg.png");
+  mediumTrackBackground = loadImage("images/backgrounds/mediumbg.png");
+  hardTrackBackground = loadImage("images/backgrounds/hardbg.png");
+
   easySong = new AudioManager(this, "sound/easysongNEW.mp3");
   mediumSong = new AudioManager(this, "sound/mediumsongNEW.mp3");
   hardSong = new AudioManager(this, "sound/hardsongNEW.mp3");
 
-  songDuration = easySong.getDuration();
+  easySongDuration = easySong.getDuration();
+  mediumSongDuration = mediumSong.getDuration();
+  hardSongDuration = hardSong.getDuration();
+  
+  pressSpace = loadImage("images/texts/pressspace.png");
+  gradeSS = loadImage("images/scores/SS.png");
+  gradeS = loadImage("images/scores/S.png");
+  gradeA = loadImage("images/scores/A.png");
+  gradeB = loadImage("images/scores/B.png");
+  gradeC = loadImage("images/scores/C.png");
+  gradeD = loadImage("images/scores/D.png");
+  gradeF = loadImage("images/scores/F.png");
 
   songStartTime = millis();
   fullScreen();
@@ -151,7 +174,16 @@ void draw() {
       image(difficultyButton, 6*width/8, 708 + 90);
     }
     else if(easyLevel || mediumLevel || hardLevel){
-      background(background);
+      if (easyLevel) {
+        background(easyTrackBackground);
+      }
+      if (mediumLevel) {
+        background(mediumTrackBackground);
+      }
+      if (hardLevel) {
+        background(hardTrackBackground);
+      }
+       
       player.displayScore();
       float currentSongTime = (millis() - songStartTime) / 1000.0;
   
@@ -196,7 +228,63 @@ void draw() {
           }
        }
        feedbackManager.displayFeedback();
+       
+       if (easyLevel) {
+         if (currentSongTime >= easySongDuration) {
+           maxScore = 5000;
+           easySong.stop();
+           easyLevel = false;
+           resultsScreen = true;
+           return;
+         }
+       }
+       
+       if (mediumLevel) {
+         if (currentSongTime >= mediumSongDuration) {
+            maxScore = 0;
+            mediumSong.stop();
+            mediumLevel = false;
+            resultsScreen = true;
+            return;
+          }
+       }
+       
+       if (hardLevel) {
+         if (currentSongTime >= hardSongDuration) {
+            maxScore = 100000;
+            hardSong.stop();
+            hardLevel = false;
+            resultsScreen = true;
+            return;
+          }
+       }
     }
+    else if (resultsScreen) {
+      background(trackBackground);
+      
+      float percentage = (float) player.score / maxScore * 100;
+      
+      imageMode(CENTER);
+      
+      if (percentage >= 95) {
+        image(gradeSS, width / 4, height / 2);
+      } else if (percentage >= 90) {
+        image(gradeS, width / 4, height / 2);
+      } else if (percentage >= 80) {
+        image(gradeA, width / 4, height / 2);
+      } else if (percentage >= 70) {
+        image(gradeB, width / 4, height / 2);
+      } else if (percentage >= 60) {
+        image(gradeC, width / 4, height / 2);
+      } else if (percentage >= 50) {
+        image(gradeD, width / 4, height / 2);
+      } else {
+        image(gradeF, width / 4, height / 2);
+      }
+      
+      player.displayResult();
+      image(pressSpace, width/2, height-pressSpace.height);
+   }
 }
 
 // if a key is pressed
@@ -246,6 +334,14 @@ void keyPressed() {
       }
       return;
   } 
+  else if (resultsScreen) {
+    if (key == ' ') {
+      resultsScreen = false;
+      trackMenu = true;
+      player.setPoints(0);
+    }
+    return;
+  }
   else {
     for (Note n : notes) {
       if (!n.isHit && n.isActive && n.checkHit(keyCode, feedbackManager, player)) {

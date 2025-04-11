@@ -232,7 +232,9 @@ class Note {
   }
   
   boolean isOffScreen() {
-    if (!isHeldNote) return y > height;
+    if (!isHeldNote) {
+      return y > height;
+    }
     // For held notes, check if all segments are past the screen
     return segmentPositions.size() > 0 && 
            segmentPositions.get(segmentPositions.size()-1) > height;

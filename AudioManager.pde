@@ -19,4 +19,8 @@ class AudioManager {
   void play() {
     song.play();
   }
+  
+  void stop() {
+    song.stop(); 
+  }
 }
