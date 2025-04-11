@@ -17,8 +17,17 @@ PImage background;
 PImage leftArrow, rightArrow, upArrow, downArrow;
 PImage leftArrowb, rightArrowb, upArrowb, downArrowb;
 PImage leftArrowbp, rightArrowbp, upArrowbp, downArrowbp;
+
 PImage menuBackground;
 PImage trackBackground;
+
+PImage menuTitle;
+PImage exitButton;
+PImage optionButton;
+PImage highlightedButton;
+PImage difficultyButton;
+PImage songTitle;
+PImage albumIcon;
 
 // feedback images
 PImage perfectFeedback, goodFeedback, okFeedback, missFeedback;
@@ -26,16 +35,11 @@ PImage perfectFeedback, goodFeedback, okFeedback, missFeedback;
 import processing.sound.*; // Add sound library import
 
 AudioManager easySong;
-AudioManager mediumSong;
-AudioManager hardSong;
-
 float songDuration;
 
 boolean menu = true;
 boolean trackMenu = false;
 boolean easyLevel = false;
-boolean mediumLevel = false;
-boolean hardLevel = false;
 
 void setup() {
   
@@ -46,6 +50,23 @@ void setup() {
   // load assets
   background = loadImage("images/backgrounds/menubg.png");
   
+  perfectFeedback = loadImage("images/feedbacks/mikuperfect.png");
+  goodFeedback = loadImage("images/feedbacks/mikugood.png");
+  okFeedback = loadImage("images/feedbacks/mikuok.png");
+  missFeedback = loadImage("images/feedbacks/mikumiss.png");
+
+  menuBackground = loadImage("images/backgrounds/mainscreen.png");
+  trackBackground = loadImage("images/backgrounds/menubg.png");
+  
+  easySong = new AudioManager(this, "sound/easysongNEW.mp3");
+  songDuration = easySong.getDuration();
+  
+  menuTitle = loadImage("images/texts/choosetrackheader.png");
+  exitButton = loadImage("images/buttons/exitbutton.png");
+  optionButton = loadImage("images/buttons/selectionboxinactive.png");
+  highlightedButton = loadImage("images/buttons/selectionboxactive.png");
+  albumIcon = loadImage("images/album.png");
+
   leftArrowb = loadImage("images/arrows/arrowlb.png");
   leftArrowbp = loadImage("images/arrows/arrowlbp.png");
   leftArrow = leftArrowb;
@@ -61,20 +82,6 @@ void setup() {
   downArrowb = loadImage("images/arrows/arrowdb.png");
   downArrowbp = loadImage("images/arrows/arrowdbp.png");
   downArrow = downArrowb;
-  
-  perfectFeedback = loadImage("images/feedbacks/mikuperfect.png");
-  goodFeedback = loadImage("images/feedbacks/mikugood.png");
-  okFeedback = loadImage("images/feedbacks/mikuok.png");
-  missFeedback = loadImage("images/feedbacks/mikumiss.png");
-
-  menuBackground = loadImage("images/backgrounds/mainscreen.png");
-  trackBackground = loadImage("images/backgrounds/menubg.png");
-  
-  easySong = new AudioManager(this, "sound/easysongNEW.mp3");
-  mediumSong = new AudioManager(this, "sound/mediumsongNEW.mp3");
-  hardSong = new AudioManager(this, "sound/hardsongNEW.mp3");
-
-  songDuration = easySong.getDuration();
 
   songStartTime = millis();
   fullScreen();
@@ -87,20 +94,6 @@ void draw() {
     }
     else if(trackMenu){
       background(trackBackground);
-      
-      PImage menuTitle;
-      PImage exitButton;
-      PImage optionButton;
-      PImage highlightedButton;
-      PImage difficultyButton;
-      PImage songTitle;
-      PImage albumIcon;
-      
-      menuTitle = loadImage("images/texts/choosetrackheader.png");
-      exitButton = loadImage("images/buttons/exitbutton.png");
-      optionButton = loadImage("images/buttons/selectionboxinactive.png");
-      highlightedButton = loadImage("images/buttons/selectionboxactive.png");
-      albumIcon = loadImage("images/album.png");
       
       imageMode(CENTER);
       image(menuTitle, width/2, 96);
@@ -150,7 +143,7 @@ void draw() {
       image(songTitle, 2*width/5 + 64, 708 + 90);
       image(difficultyButton, 6*width/8, 708 + 90);
     }
-    else if(easyLevel || mediumLevel || hardLevel){
+    else if(easyLevel){
       background(background);
       player.displayScore();
       float currentSongTime = (millis() - songStartTime) / 1000.0;
@@ -191,7 +184,7 @@ void draw() {
           n.update(currentSongTime);
           n.display();
   
-          if (n.isHit || (n.isOffScreen() && !n.isHeldNote)) {
+          if (n.isHit || n.isOffScreen()) {
               notes.remove(i);
           }
        }
@@ -201,77 +194,45 @@ void draw() {
 
 // if a key is pressed
 void keyPressed() {
-  if (menu) {
-    if (key == ' ') {
+    if (menu && key == ' ') {
       menu = false;
       trackMenu = true;
+      return;
     }
-    return;
-  }
-  else if (trackMenu) {
-      // Handle scrolling options
-      if (keyCode == DOWN && currentTrackOption < 2) {
-          currentTrackOption++; // Move down
-      } else if (keyCode == UP && currentTrackOption > 0) {
-          currentTrackOption--; // Move up
-      }
-      if (trackMenu && keyCode == ENTER) {
-      // Choose the option based on currentOption
-        if (currentTrackOption == 0) {
-          trackMenu = false;
-          easyLevel = true;
-          songStartTime = millis();
-          easySong.play(); // Start song
-          notes = new ArrayList<Note>();
-          pattern = new Pattern();
-          notes = pattern.easyLevel();
-        } else if (currentTrackOption == 1) {
-          trackMenu = false;
-          mediumLevel = true;
-          songStartTime = millis();
-          mediumSong.play(); // Start song
-          notes = new ArrayList<Note>();
-          pattern = new Pattern();
-          //notes = pattern.mediumLevel();
-        } else if (currentTrackOption == 2) {
-          trackMenu = false;
-          hardLevel = true;
-          songStartTime = millis();
-          hardSong.play(); // Start song
-          notes = new ArrayList<Note>();
-          pattern = new Pattern();
-          //notes = pattern.hardLevel();
+    else if (trackMenu) {
+        // Handle scrolling options
+        if (keyCode == DOWN && currentTrackOption < 2) {
+            currentTrackOption++; // Move down
+        } else if (keyCode == UP && currentTrackOption > 0) {
+            currentTrackOption--; // Move up
+        }
+        if (trackMenu && keyCode == ENTER) {
+        // Choose the option based on currentOption
+          if (currentTrackOption == 0) {
+              trackMenu = false;
+              easyLevel = true;
+              songStartTime = millis();
+              easySong.play(); // Start song
+              notes = new ArrayList<Note>();
+            pattern = new Pattern();
+            notes = pattern.easyLevel();
+
+          } else if (currentTrackOption == 1) {
+              // Add logic for option 1
+          } else if (currentTrackOption == 2) {
+              // Add logic for option 2
+          }
+          return;
         }
         return;
-      }
-      return;
-  } 
-  else {
-    for (Note n : notes) {
-      if (!n.isHit && n.isActive && n.checkHit(keyCode, feedbackManager, player)) {
-        if (!n.isHeldNote) {
-          n.isHit = true;        
+    } 
+    else{
+      for (Note n : notes) {
+        if (n.isActive && n.checkHit(keyCode, feedbackManager, player)) {
+            n.isHit = true;
+            break;
         }
-        break;
       }
     }
-  }
-}
-
-void keyReleased() {
-   if (easyLevel || mediumLevel || hardLevel) {
-     for (Note n : notes) {
-       if (n.isHeldNote && n.isHolding && !n.isHit) { 
-         float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;
-         if (elapsedHoldTime >= n.holdDuration) { 
-           n.isHit = true; 
-           feedbackManager.addFeedback(perfectFeedback, millis());
-           player.addPoints(150); // Bonus points for completing a held note
-         } else { 
-           feedbackManager.addFeedback(missFeedback, millis());
-         }
-         n.isHolding = false; 
-       }
-    }
-  }
+  
 }

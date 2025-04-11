@@ -16,7 +16,7 @@ int currentTrackOption = 0;
 PImage background;
 PImage leftArrow, rightArrow, upArrow, downArrow;
 PImage leftArrowb, rightArrowb, upArrowb, downArrowb;
-PImage leftArrowbp, rightArrowbp, upArrowbp, downArrowbp;
+PImage leftArrowp, rightArrowp, upArrowp, downArrowp;
 PImage menuBackground;
 PImage trackBackground;
 
@@ -26,16 +26,11 @@ PImage perfectFeedback, goodFeedback, okFeedback, missFeedback;
 import processing.sound.*; // Add sound library import
 
 AudioManager easySong;
-AudioManager mediumSong;
-AudioManager hardSong;
-
 float songDuration;
 
 boolean menu = true;
 boolean trackMenu = false;
 boolean easyLevel = false;
-boolean mediumLevel = false;
-boolean hardLevel = false;
 
 void setup() {
   
@@ -45,22 +40,18 @@ void setup() {
   libreFont = createFont("LibreBaskerville-Regular.ttf", 64);
   // load assets
   background = loadImage("images/backgrounds/menubg.png");
-  
+  leftArrow = loadImage("images/arrows/arrowlb.png");
+  rightArrow = loadImage("images/arrows/arrowrb.png");
+  upArrow = loadImage("images/arrows/arrowub.png");
+  downArrow = loadImage("images/arrows/arrowdb.png");
   leftArrowb = loadImage("images/arrows/arrowlb.png");
-  leftArrowbp = loadImage("images/arrows/arrowlbp.png");
-  leftArrow = leftArrowb;
-  
   rightArrowb = loadImage("images/arrows/arrowrb.png");
-  rightArrowbp = loadImage("images/arrows/arrowrbp.png");
-  rightArrow = rightArrowb;
-  
   upArrowb = loadImage("images/arrows/arrowub.png");
-  upArrowbp = loadImage("images/arrows/arrowubp.png");
-  upArrow = upArrowb;
-  
   downArrowb = loadImage("images/arrows/arrowdb.png");
-  downArrowbp = loadImage("images/arrows/arrowdbp.png");
-  downArrow = downArrowb;
+  leftArrowp = loadImage("images/arrows/arrowlbp.png");
+  rightArrowp = loadImage("images/arrows/arrowrbp.png");
+  upArrowp = loadImage("images/arrows/arrowubp.png");
+  downArrowp = loadImage("images/arrows/arrowdbp.png");
   
   perfectFeedback = loadImage("images/feedbacks/mikuperfect.png");
   goodFeedback = loadImage("images/feedbacks/mikugood.png");
@@ -70,10 +61,7 @@ void setup() {
   menuBackground = loadImage("images/backgrounds/mainscreen.png");
   trackBackground = loadImage("images/backgrounds/menubg.png");
   
-  easySong = new AudioManager(this, "sound/easysongNEW.mp3");
-  mediumSong = new AudioManager(this, "sound/mediumsongNEW.mp3");
-  hardSong = new AudioManager(this, "sound/hardsongNEW.mp3");
-
+  easySong = new AudioManager(this, "sound/easysong.mp3");
   songDuration = easySong.getDuration();
 
   songStartTime = millis();
@@ -150,7 +138,7 @@ void draw() {
       image(songTitle, 2*width/5 + 64, 708 + 90);
       image(difficultyButton, 6*width/8, 708 + 90);
     }
-    else if(easyLevel || mediumLevel || hardLevel){
+    else if(easyLevel){
       background(background);
       player.displayScore();
       float currentSongTime = (millis() - songStartTime) / 1000.0;
@@ -162,25 +150,25 @@ void draw() {
       
       // check if keys are being pressed and highlight button
       if (keyCode == LEFT && keyPressed) {
-        leftArrow = leftArrowbp;
+        leftArrow = leftArrowp;
       } else {
         leftArrow = leftArrowb;
       }
       
       if (keyCode == RIGHT && keyPressed) {
-        rightArrow = rightArrowbp;
+        rightArrow = rightArrowp;
       } else {
         rightArrow = rightArrowb;
       }
       
       if (keyCode == DOWN && keyPressed) {
-        downArrow = downArrowbp;
+        downArrow = downArrowp;
       } else {
         downArrow = downArrowb;
       }
       
       if (keyCode == UP && keyPressed) {
-        upArrow = upArrowbp;
+        upArrow = upArrowp;
       } else {
         upArrow = upArrowb;
       }
@@ -218,29 +206,18 @@ void keyPressed() {
       if (trackMenu && keyCode == ENTER) {
       // Choose the option based on currentOption
         if (currentTrackOption == 0) {
-          trackMenu = false;
-          easyLevel = true;
-          songStartTime = millis();
-          easySong.play(); // Start song
-          notes = new ArrayList<Note>();
+            trackMenu = false;
+            easyLevel = true;
+            songStartTime = millis();
+            easySong.play(); // Start song
+            notes = new ArrayList<Note>();
           pattern = new Pattern();
           notes = pattern.easyLevel();
+
         } else if (currentTrackOption == 1) {
-          trackMenu = false;
-          mediumLevel = true;
-          songStartTime = millis();
-          mediumSong.play(); // Start song
-          notes = new ArrayList<Note>();
-          pattern = new Pattern();
-          //notes = pattern.mediumLevel();
+            // Add logic for option 1
         } else if (currentTrackOption == 2) {
-          trackMenu = false;
-          hardLevel = true;
-          songStartTime = millis();
-          hardSong.play(); // Start song
-          notes = new ArrayList<Note>();
-          pattern = new Pattern();
-          //notes = pattern.hardLevel();
+            // Add logic for option 2
         }
         return;
       }
@@ -259,7 +236,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
-   if (easyLevel || mediumLevel || hardLevel) {
+   if (easyLevel) {
      for (Note n : notes) {
        if (n.isHeldNote && n.isHolding && !n.isHit) { 
          float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;

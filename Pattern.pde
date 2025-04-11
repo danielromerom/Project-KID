@@ -15,7 +15,8 @@ class Pattern{
   ArrayList<Note> easyLevel(){
     pattern_notes = new ArrayList<Note>();
     
-    pattern_notes.add(new Note(rightArrowLoc, 0, 11, "right", 1.0, true, 8.0));
+     //pattern_notes.add(new Note(rightArrowLoc, 0, 11, "right", 1.0, true, 8.0));
+    // held note but kinda glitchy
   
     pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 0.8)); 
     pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 0.8)); 
