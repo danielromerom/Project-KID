@@ -69,7 +69,7 @@ class Pattern{
     pattern_notes.add(new Note(leftArrowLoc, 0, 10, "left", 34));
     
     pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 35));
-    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 36.5));
+
     pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 36.8));
     pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 37.1));
     
