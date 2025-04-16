@@ -33,10 +33,18 @@ import processing.sound.*; // Add sound library import
 AudioManager easySong;
 AudioManager mediumSong;
 AudioManager hardSong;
+AudioManager hitSound;
+AudioManager toggleSound;
+AudioManager enterSound;
+AudioManager sparkleSound;
 
 float easySongDuration;
 float mediumSongDuration;
 float hardSongDuration;
+float hitSoundDuration;
+float toggleSoundDuration;
+float enterSoundDuration;
+float sparkleSoundDuration;
 int maxScore;
 
 boolean menu = true;
@@ -85,10 +93,18 @@ void setup() {
   easySong = new AudioManager(this, "sound/easysongNEW.mp3");
   mediumSong = new AudioManager(this, "sound/mediumsongNEW.mp3");
   hardSong = new AudioManager(this, "sound/hardsongNEW.mp3");
+  hitSound = new AudioManager(this, "sound/cymbal2.mp3");
+  toggleSound = new AudioManager(this, "sound/menutoggle.mp3");
+  enterSound = new AudioManager(this, "sound/menuclick.mp3");
+  sparkleSound = new AudioManager(this, "sound/sparkle.mp3");
 
   easySongDuration = easySong.getDuration();
   mediumSongDuration = mediumSong.getDuration();
   hardSongDuration = hardSong.getDuration();
+  hitSoundDuration = hitSound.getDuration();
+  toggleSoundDuration = toggleSound.getDuration();
+  enterSoundDuration = enterSound.getDuration();
+  sparkleSoundDuration = sparkleSound.getDuration();
   
   pressSpace = loadImage("images/texts/pressspace.png");
   gradeSS = loadImage("images/scores/SS.png");
@@ -291,6 +307,7 @@ void draw() {
 void keyPressed() {
   if (menu) {
     if (key == ' ') {
+      sparkleSound.play();
       menu = false;
       trackMenu = true;
     }
@@ -299,12 +316,16 @@ void keyPressed() {
   else if (trackMenu) {
       // Handle scrolling options
       if (keyCode == DOWN && currentTrackOption < 2) {
-          currentTrackOption++; // Move down
+          currentTrackOption++;
+          toggleSound.play();
+          // Move down
       } else if (keyCode == UP && currentTrackOption > 0) {
           currentTrackOption--; // Move up
+          toggleSound.play();
       }
       if (trackMenu && keyCode == ENTER) {
       // Choose the option based on currentOption
+        enterSound.play();
         if (currentTrackOption == 0) {
           trackMenu = false;
           easyLevel = true;
@@ -346,7 +367,8 @@ void keyPressed() {
     for (Note n : notes) {
       if (!n.isHit && n.isActive && n.checkHit(keyCode, feedbackManager, player)) {
         if (!n.isHeldNote) {
-          n.isHit = true;        
+          n.isHit = true;  
+          //hitSound.play();
         }
         break;
       }
@@ -354,20 +376,20 @@ void keyPressed() {
   }
 }
 
-void keyReleased() {
-   if (easyLevel || mediumLevel || hardLevel) {
-     for (Note n : notes) {
-       if (n.isHeldNote && n.isHolding && !n.isHit) { 
-         float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;
-         if (elapsedHoldTime >= n.holdDuration) { 
-           n.isHit = true; 
-           feedbackManager.addFeedback(perfectFeedback, millis());
-           player.addPoints(150); // Bonus points for completing a held note
-         } else { 
-           feedbackManager.addFeedback(missFeedback, millis());
-         }
-         n.isHolding = false; 
-       }
-    }
-  }
-}
+//void keyReleased() {
+   //if (easyLevel || mediumLevel || hardLevel) {
+     //for (Note n : notes) {
+       //if (n.isHeldNote && n.isHolding && !n.isHit) { 
+         //float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;
+         //if (elapsedHoldTime >= n.holdDuration) { 
+           //n.isHit = true; 
+           //feedbackManager.addFeedback(perfectFeedback, millis());
+           //player.addPoints(150); // Bonus points for completing a held note
+         //} else { 
+           //feedbackManager.addFeedback(missFeedback, millis());
+         //}
+         //n.isHolding = false; 
+       //}
+    //}
+  //}
+//}
