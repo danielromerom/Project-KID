@@ -1,5 +1,6 @@
 import processing.sound.*; // Import the Sound library
 
+
 class AudioManager {
   SoundFile song;
   float songDuration;
@@ -20,6 +21,7 @@ class AudioManager {
     song.play();
   }
   
+  // method to stop the sound
   void stop() {
     song.stop(); 
   }

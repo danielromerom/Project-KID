@@ -9,9 +9,7 @@ class Pattern{
     int upArrowLoc = 992+96;
     int arrowHeight = 778+96;
   
-  Pattern(){
-  }
-  
+  // this is the notes pattern for the easy level that goes down the screen
   ArrayList<Note> easyLevel(){
     pattern_notes = new ArrayList<Note>();
     
@@ -79,10 +77,6 @@ class Pattern{
     pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 43));
     pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 45));
     pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 46.6));
-       
-       
-    
-
     
     
     return pattern_notes;

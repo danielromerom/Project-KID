@@ -12,6 +12,7 @@ FeedbackManager feedbackManager = new FeedbackManager();
 Player player = new Player();
 PFont libreFont;
 
+// all images
 int currentTrackOption = 0;
 PImage background;
 PImage pressSpace;
@@ -30,6 +31,7 @@ PImage gradeSS, gradeS, gradeA, gradeB, gradeC, gradeD, gradeF;
 
 import processing.sound.*; // Add sound library import
 
+// all audios
 AudioManager easySong;
 AudioManager mediumSong;
 AudioManager hardSong;
@@ -38,6 +40,7 @@ AudioManager toggleSound;
 AudioManager enterSound;
 AudioManager sparkleSound;
 
+// all song durations
 float easySongDuration;
 float mediumSongDuration;
 float hardSongDuration;
@@ -47,6 +50,7 @@ float enterSoundDuration;
 float sparkleSoundDuration;
 int maxScore;
 
+// all booleans
 boolean menu = true;
 boolean trackMenu = false;
 boolean easyLevel = false;
