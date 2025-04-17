@@ -251,7 +251,7 @@ void draw() {
        
        if (easyLevel) {
          if (currentSongTime >= easySongDuration) {
-           maxScore = 5000;
+           maxScore = 16200;
            easySong.stop();
            easyLevel = false;
            resultsScreen = true;
@@ -261,7 +261,7 @@ void draw() {
        
        if (mediumLevel) {
          if (currentSongTime >= mediumSongDuration) {
-            maxScore = 0;
+            maxScore = 0; // multiply the numebr of notes in pattern by 300
             mediumSong.stop();
             mediumLevel = false;
             resultsScreen = true;
@@ -271,7 +271,7 @@ void draw() {
        
        if (hardLevel) {
          if (currentSongTime >= hardSongDuration) {
-            maxScore = 100000;
+            maxScore = 100000; // multiply the numebr of notes in pattern by 300
             hardSong.stop();
             hardLevel = false;
             resultsScreen = true;
@@ -286,17 +286,17 @@ void draw() {
       
       imageMode(CENTER);
       
-      if (percentage >= 95) {
+      if (percentage >= 90) {
         image(gradeSS, width / 4, height / 2);
-      } else if (percentage >= 90) {
-        image(gradeS, width / 4, height / 2);
       } else if (percentage >= 80) {
-        image(gradeA, width / 4, height / 2);
+        image(gradeS, width / 4, height / 2);
       } else if (percentage >= 70) {
-        image(gradeB, width / 4, height / 2);
+        image(gradeA, width / 4, height / 2);
       } else if (percentage >= 60) {
-        image(gradeC, width / 4, height / 2);
+        image(gradeB, width / 4, height / 2);
       } else if (percentage >= 50) {
+        image(gradeC, width / 4, height / 2);
+      } else if (percentage >= 40) {
         image(gradeD, width / 4, height / 2);
       } else {
         image(gradeF, width / 4, height / 2);
@@ -376,6 +376,21 @@ void keyPressed() {
         }
         break;
       }
+    }
+  }
+}
+
+void mousePressed() {
+  // Check if in track menu
+  if (trackMenu) {
+    int exitX = 260;
+    int exitY = 91;
+    int exitWidth = 344;
+    int exitHeight = 105;
+
+    if (mouseX >= exitX && mouseX <= exitX + exitWidth &&
+        mouseY >= exitY && mouseY <= exitY + exitHeight) {
+      exit(); // Quit the program
     }
   }
 }

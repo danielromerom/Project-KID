@@ -160,17 +160,17 @@ class Note {
   
   boolean checkNormalHit(FeedbackManager feedbackManager, Player player) {
     // Check y position for feedback
-    if (y > arrowHeight - 8 && y < arrowHeight + 8 ) {
+    if (y > arrowHeight - 20 && y < arrowHeight + 20 ) {
         feedbackManager.addFeedback(perfectFeedback, millis());
-        player.addPoints(500);
-        return true; // successfully hit the note
-    } else if (y > arrowHeight - 48 && y < arrowHeight + 48) {
-        feedbackManager.addFeedback(goodFeedback, millis());
         player.addPoints(300);
-        return true; // still a hit but less accurate
-    } else if (y > arrowHeight - 78 && y < arrowHeight + 78) {
-        feedbackManager.addFeedback(okFeedback, millis());
+        return true; // successfully hit the note
+    } else if (y > arrowHeight - 50 && y < arrowHeight + 50) {
+        feedbackManager.addFeedback(goodFeedback, millis());
         player.addPoints(200);
+        return true; // still a hit but less accurate
+    } else if (y > arrowHeight - 80 && y < arrowHeight + 80) {
+        feedbackManager.addFeedback(okFeedback, millis());
+        player.addPoints(100);
         return true; // barely hit the note
     } else {
         feedbackManager.addFeedback(missFeedback, millis());
