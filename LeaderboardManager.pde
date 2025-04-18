@@ -42,7 +42,7 @@ class LeaderboardManager{
     rectMode(CENTER);
     fill(#D6D6D6, 80);
     rect(x, y, height/2, width/3);
-    fill(255);
+    fill(90);
     textAlign(CENTER);
     textSize(48);
     

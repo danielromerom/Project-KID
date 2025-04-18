@@ -146,6 +146,11 @@ void draw() {
   
     if (menu){
       background(menuBackground);
+      textAlign(CENTER);
+      textSize(30);
+      fill(90);
+      text("For a better experience with reduced delay, do not use wireless headphones", width/2, height/2+144);
+      text("If using a Laptop, plug into power", width/2, height/2+144+32);
     }
     else if(trackMenu){
       background(trackBackground);
@@ -336,11 +341,11 @@ void draw() {
       
       textAlign(CENTER);
       textSize(30);
-      fill(255);
-      
+      fill(90);
+ 
       if (enteringInitials) {
-        text("Enter your initials: " + playerInitials, width / 2, height / 2 + 100);
-        text("Press ENTER to confirm", width / 2, height / 2 + 150);
+        text("Enter your initials: " + playerInitials, 3 * width / 4, height / 2);
+        text("Press ENTER to confirm", 3 * width / 4, height / 2 + 32);
       } else {
         if (easyResult) {
           easyLeaderboard.display(3 * width / 4, height / 2);
@@ -417,7 +422,7 @@ void keyPressed() {
           mediumSong.play(); // Start song
           notes = new ArrayList<Note>();
           pattern = new Pattern();
-          //notes = pattern.mediumLevel();
+          notes = pattern.mediumLevel();
         } else if (currentTrackOption == 2) {
           trackMenu = false;
           hardLevel = true;
@@ -471,7 +476,7 @@ void mousePressed() {
 }
 
 void keyReleased() {
-   if (mediumLevel || hardLevel) {
+   if (hardLevel) {
      for (Note n : notes) {
        if (n.isHeldNote && n.isHolding && !n.isHit) { 
          float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;

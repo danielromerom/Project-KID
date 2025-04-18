@@ -82,6 +82,101 @@ class Pattern{
     return pattern_notes;
   }
   
+  ArrayList<Note> mediumLevel(){
+    pattern_notes = new ArrayList<Note>();
+    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 0.6)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 0.9)); 
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 1.2)); 
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 1.2)); 
+    
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 2.0)); 
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 2.3)); 
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 2.6)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 2.6));   
+
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 4.1)); 
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 4.1)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 4.3)); 
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 4.3));   
+    
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 5.5)); 
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 5.5)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 5.8)); 
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 5.8));
+    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 7.1)); 
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 7.3)); 
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 7.5)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 7.7));
+    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 8.0)); 
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 8.6));
+
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 9.2)); 
+
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 10.8)); 
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 11.0)); 
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 11.2)); 
+    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 12.8));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 13.0));
+    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 13.8));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 14.2));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 14.6));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 15.0));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 15.5));
+    
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 16.4));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 16.6));
+    
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 17.2));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 17.6));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 18.0));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 18.4));
+    
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 18.9));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 19.3));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 19.7));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 20.1));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 20.5));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 20.9));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 21.4));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 21.9));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 22.3));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 22.7));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 23.1));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 23.6));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 24.0));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 24.5));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 24.9));
+  
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 25.8));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 26.2));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 26.6));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 27.0));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 27.0));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 27.4));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 27.8));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 28.2));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 28.6));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 28.6));
+    
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 29.0));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 29.4));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 29.8));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 30.2));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 30.2));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 30.6));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 31.0));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 31.4));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 31.8));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 31.8));
+    
+    return pattern_notes;
+  }
+  
   ArrayList<Note> hardLevel(){
     pattern_notes = new ArrayList<Note>();
     
