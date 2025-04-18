@@ -88,7 +88,7 @@ class Note {
       }
     } else if (type.equals("down")) {
       if (isHeldNote) {
-        sprite = loadImage("images/arrows/arrowuf.png");                  
+        sprite = loadImage("images/arrows/arrowdf.png");                  
       }
       else {
         sprite = loadImage("images/arrows/arrowdh.png");      
@@ -109,7 +109,7 @@ class Note {
         
         if (isHeldNote && !holdStarted && y > arrowHeight + 78) {
           isHit = true;
-          feedbackManager.addFeedback(missFeedback, millis());
+          //feedbackManager.addFeedback(missFeedback, millis());
         }
       }
     }
@@ -135,7 +135,8 @@ class Note {
             // Debug text
             fill(segmentCleared.get(i) ? 0 : 255, 0, 0);
             textSize(12);
-            text("Seg: " + i + "\nY: " + nf(segmentY, 1, 1), x + 50, segmentY);
+            // debugging tool
+            // text("Seg: " + i + "\nY: " + nf(segmentY, 1, 1), x + 50, segmentY);
           }
         }
       }
@@ -160,15 +161,15 @@ class Note {
   
   boolean checkNormalHit(FeedbackManager feedbackManager, Player player) {
     // Check y position for feedback
-    if (y > arrowHeight - 20 && y < arrowHeight + 20 ) {
+    if (y > arrowHeight - 30 && y < arrowHeight + 30 ) {
         feedbackManager.addFeedback(perfectFeedback, millis());
         player.addPoints(300);
         return true; // successfully hit the note
-    } else if (y > arrowHeight - 50 && y < arrowHeight + 50) {
+    } else if (y > arrowHeight - 60 && y < arrowHeight + 60) {
         feedbackManager.addFeedback(goodFeedback, millis());
         player.addPoints(200);
         return true; // still a hit but less accurate
-    } else if (y > arrowHeight - 80 && y < arrowHeight + 80) {
+    } else if (y > arrowHeight - 90 && y < arrowHeight + 90) {
         feedbackManager.addFeedback(okFeedback, millis());
         player.addPoints(100);
         return true; // barely hit the note
@@ -191,7 +192,6 @@ class Note {
         startHold(player, feedbackManager, okFeedback, 5);
         return true; 
       } else {
-        forceMiss(feedbackManager);
         return true;
       }
     } else {

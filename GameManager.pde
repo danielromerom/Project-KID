@@ -294,7 +294,7 @@ void draw() {
        
        if (hardLevel) {
          if (currentSongTime >= hardSongDuration) {
-            maxScore = 100000; // multiply the numebr of notes in pattern by 300
+            maxScore = 45000; // multiply the numebr of notes in pattern by 300
             hardSong.stop();
             hardLevel = false;
             hardResult = true;
@@ -342,13 +342,12 @@ void draw() {
         text("Enter your initials: " + playerInitials, width / 2, height / 2 + 100);
         text("Press ENTER to confirm", width / 2, height / 2 + 150);
       } else {
-        text("Leaderboard", width / 2, height / 4);
         if (easyResult) {
-          easyLeaderboard.display(width / 3, height / 3);
+          easyLeaderboard.display(3 * width / 4, height / 2);
         } else if (mediumResult) {
-          mediumLeaderboard.display(width / 3, height / 3);
+          mediumLeaderboard.display(3 * width / 4, height / 2);
         } else if (hardResult) {
-          hardLeaderboard.display(width / 3, height / 3);
+          hardLeaderboard.display(3 * width / 4, height / 2);
         }
       }
 
@@ -366,6 +365,7 @@ void keyPressed() {
     if (keyCode == BACKSPACE && playerInitials.length() > 0) {
       playerInitials = playerInitials.substring(0, playerInitials.length() - 1);
     } else if (key == ENTER) {
+      enterSound.play();
       if (easyResult) {
         easyLeaderboard.addScore(playerInitials, player.score);
       } else if (mediumResult) {
@@ -425,7 +425,7 @@ void keyPressed() {
           hardSong.play(); // Start song
           notes = new ArrayList<Note>();
           pattern = new Pattern();
-          //notes = pattern.hardLevel();
+          notes = pattern.hardLevel();
         }
         return;
       }

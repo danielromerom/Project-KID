@@ -39,12 +39,20 @@ class LeaderboardManager{
 
   void display(float x, float y) {
     // this is for display logic when the end screen is up
+    rectMode(CENTER);
+    fill(#D6D6D6, 80);
+    rect(x, y, height/2, width/3);
     fill(255);
-    textAlign(LEFT);
-    textSize(20);
+    textAlign(CENTER);
+    textSize(48);
+    
+    text("Leaderboard:", x, y - height/8);
+    
+    textSize(32);
+    
     for (int i = 0; i < leaderboard.size(); i++) {
       Score s = leaderboard.get(i);
-      text((i + 1) + ". " + s.initials + " - " + s.score, x, y + i * 30);
+      text((i + 1) + ". " + s.initials + " - " + s.score, x, y - height/16 + i * 64);
     }
   }
   

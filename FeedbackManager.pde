@@ -20,7 +20,7 @@ class FeedbackManager {
 
     void displayFeedback() {
         imageMode(CENTER);
-        for (int i = feedbackImages.size() - 1; i >= 0; i--) {
+        for (int i = 0; i <= feedbackImages.size() - 1; i++) {
             if (millis() - feedbackTimers.get(i) < FEEDBACK_DURATION) {
                 image(feedbackImages.get(i), width / 2, 3 * height / 10, width / 3, height / 3); // Position of feedback
             } else {
