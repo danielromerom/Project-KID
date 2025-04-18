@@ -417,7 +417,7 @@ void keyPressed() {
           mediumSong.play(); // Start song
           notes = new ArrayList<Note>();
           pattern = new Pattern();
-          //notes = pattern.mediumLevel();
+          notes = pattern.mediumLevel();
         } else if (currentTrackOption == 2) {
           trackMenu = false;
           hardLevel = true;
@@ -471,7 +471,7 @@ void mousePressed() {
 }
 
 void keyReleased() {
-   if (mediumLevel || hardLevel) {
+   if (hardLevel) {
      for (Note n : notes) {
        if (n.isHeldNote && n.isHolding && !n.isHit) { 
          float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;
