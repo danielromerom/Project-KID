@@ -10,6 +10,7 @@ float songStartTime;
 Pattern pattern;
 FeedbackManager feedbackManager = new FeedbackManager();
 Player player = new Player();
+String playerInitials = "";
 PFont libreFont;
 
 // all images
@@ -56,7 +57,16 @@ boolean trackMenu = false;
 boolean easyLevel = false;
 boolean mediumLevel = false;
 boolean hardLevel = false;
+boolean easyResult = false;
+boolean mediumResult = false;
+boolean hardResult = false;
 boolean resultsScreen = false;
+boolean enteringInitials = false;
+
+// all leaderboards
+LeaderboardManager easyLeaderboard;
+LeaderboardManager mediumLeaderboard;
+LeaderboardManager hardLeaderboard;
 
 void setup() {
   
@@ -118,6 +128,15 @@ void setup() {
   gradeC = loadImage("images/scores/C.png");
   gradeD = loadImage("images/scores/D.png");
   gradeF = loadImage("images/scores/F.png");
+
+  easyLeaderboard = new LeaderboardManager("easy");
+  mediumLeaderboard = new LeaderboardManager("medium");
+  hardLeaderboard = new LeaderboardManager("hard");
+  
+  // load leaderboard data
+  easyLeaderboard.loadFromJSON();
+  mediumLeaderboard.loadFromJSON();
+  hardLeaderboard.loadFromJSON();
 
   songStartTime = millis();
   fullScreen();
@@ -254,7 +273,9 @@ void draw() {
            maxScore = 16200;
            easySong.stop();
            easyLevel = false;
+           easyResult = true;
            resultsScreen = true;
+           enteringInitials = true;
            return;
          }
        }
@@ -264,7 +285,9 @@ void draw() {
             maxScore = 0; // multiply the numebr of notes in pattern by 300
             mediumSong.stop();
             mediumLevel = false;
+            mediumResult = true;
             resultsScreen = true;
+            enteringInitials = true;
             return;
           }
        }
@@ -274,14 +297,23 @@ void draw() {
             maxScore = 100000; // multiply the numebr of notes in pattern by 300
             hardSong.stop();
             hardLevel = false;
+            hardResult = true;
             resultsScreen = true;
+            enteringInitials = true;
             return;
           }
        }
     }
     else if (resultsScreen) {
-      background(trackBackground);
-      
+      if (easyResult) {
+        background(easyTrackBackground);         
+      }
+      else if (mediumResult) {
+        background(mediumTrackBackground);         
+      }
+      else if (hardResult) {
+        background(hardTrackBackground);         
+      }
       float percentage = (float) player.score / maxScore * 100;
       
       imageMode(CENTER);
@@ -302,13 +334,53 @@ void draw() {
         image(gradeF, width / 4, height / 2);
       }
       
+      textAlign(CENTER);
+      textSize(30);
+      fill(255);
+      
+      if (enteringInitials) {
+        text("Enter your initials: " + playerInitials, width / 2, height / 2 + 100);
+        text("Press ENTER to confirm", width / 2, height / 2 + 150);
+      } else {
+        text("Leaderboard", width / 2, height / 4);
+        if (easyResult) {
+          easyLeaderboard.display(width / 3, height / 3);
+        } else if (mediumResult) {
+          mediumLeaderboard.display(width / 3, height / 3);
+        } else if (hardResult) {
+          hardLeaderboard.display(width / 3, height / 3);
+        }
+      }
+
+    
       player.displayResult();
-      image(pressSpace, width/2, height-pressSpace.height);
+      image(pressSpace, width / 2, height - pressSpace.height);
    }
 }
 
 // if a key is pressed
 void keyPressed() {
+  // Logic for Player Initials
+  
+  if (enteringInitials) {
+    if (keyCode == BACKSPACE && playerInitials.length() > 0) {
+      playerInitials = playerInitials.substring(0, playerInitials.length() - 1);
+    } else if (key == ENTER) {
+      if (easyResult) {
+        easyLeaderboard.addScore(playerInitials, player.score);
+      } else if (mediumResult) {
+        mediumLeaderboard.addScore(playerInitials, player.score);
+      } else if (hardResult) {
+        hardLeaderboard.addScore(playerInitials, player.score);
+      } 
+      enteringInitials = false; // End input phase
+    } else if (playerInitials.length() < 3 && Character.isLetterOrDigit(key)) {
+      playerInitials += Character.toUpperCase(key); // Append typed character
+    }
+    return;
+  }
+
+  
   if (menu) {
     if (key == ' ') {
       sparkleSound.play();
@@ -362,6 +434,9 @@ void keyPressed() {
   else if (resultsScreen) {
     if (key == ' ') {
       resultsScreen = false;
+      easyResult = false;
+      mediumResult = false;
+      hardResult = false;
       trackMenu = true;
       player.setPoints(0);
     }
@@ -395,20 +470,20 @@ void mousePressed() {
   }
 }
 
-//void keyReleased() {
-   //if (easyLevel || mediumLevel || hardLevel) {
-     //for (Note n : notes) {
-       //if (n.isHeldNote && n.isHolding && !n.isHit) { 
-         //float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;
-         //if (elapsedHoldTime >= n.holdDuration) { 
-           //n.isHit = true; 
-           //feedbackManager.addFeedback(perfectFeedback, millis());
-           //player.addPoints(150); // Bonus points for completing a held note
-         //} else { 
-           //feedbackManager.addFeedback(missFeedback, millis());
-         //}
-         //n.isHolding = false; 
-       //}
-    //}
-  //}
-//}
+void keyReleased() {
+   if (mediumLevel || hardLevel) {
+     for (Note n : notes) {
+       if (n.isHeldNote && n.isHolding && !n.isHit) { 
+         float elapsedHoldTime = (millis() - n.holdStartTime) / 1000.0;
+         if (elapsedHoldTime >= n.holdDuration) { 
+           n.isHit = true; 
+           feedbackManager.addFeedback(perfectFeedback, millis());
+           player.addPoints(150); // Bonus points for completing a held note
+         } else { 
+           feedbackManager.addFeedback(missFeedback, millis());
+         }
+         n.isHolding = false; 
+       }
+    }
+  }
+}
