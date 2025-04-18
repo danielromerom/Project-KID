@@ -174,6 +174,38 @@ class Pattern{
     pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 31.8));
     pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 31.8));
     
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 32.4));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 32.8));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 33.2));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 33.6));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 34));
+    
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 34.5));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 35));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 35.5));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 35.8));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 36));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 36.4));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 36.8));
+    
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 37));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 37));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 37.3));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 37.3));
+    
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 37.8));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 38.3));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 38.8));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 39.1));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 39.3));
+    pattern_notes.add(new Note(downArrowLoc, 0, 7, "down", 39.7));
+    pattern_notes.add(new Note(upArrowLoc, 0, 7, "up", 40.1));
+    
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 40.3));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 40.3));
+    pattern_notes.add(new Note(rightArrowLoc, 0, 7, "right", 40.6));
+    pattern_notes.add(new Note(leftArrowLoc, 0, 7, "left", 40.6));
+    
     return pattern_notes;
   }
   
