@@ -287,7 +287,7 @@ void draw() {
        
        if (mediumLevel) {
          if (currentSongTime >= mediumSongDuration) {
-            maxScore = 0; // multiply the numebr of notes in pattern by 300
+            maxScore = 35400; // multiply the numebr of notes in pattern by 300
             mediumSong.stop();
             mediumLevel = false;
             mediumResult = true;
